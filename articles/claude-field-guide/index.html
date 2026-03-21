@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Every Claude Tool, One Clear Picture — Curious Pages</title>
+<meta name="description" content="Chat, Code, Cowork, Projects, Skills, CLAUDE.md, Dispatch — what each one is, what it does, and how they fit together into a single working system.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f9f6f0;
+    --bg-warm: #f2ede3;
+    --bg-card: #ede8de;
+    --bg-dark: #1c1a16;
+    --ink: #1c1a16;
+    --ink-mid: #3a3730;
+    --ink-soft: #6a6560;
+    --ink-faint: #a09890;
+    --rule: #d0c8bc;
+    --rule-light: #e0d8cc;
+    --red: #b83232;
+    --red-bg: #fdf2f2;
+    --green: #2a6644;
+    --green-bg: #f0f7f3;
+    --blue: #1e4a7a;
+    --blue-bg: #f0f5fb;
+    --amber: #8a5a00;
+    --amber-bg: #fdf6e8;
+    --purple: #5a3580;
+    --purple-bg: #f5f0fb;
+    --teal: #1a5f6a;
+    --teal-bg: #eef8f9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 18px; background: var(--bg); }
+  body {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.85;
+    background: var(--bg);
+  }
+  /* ─── hero ─── */
+  .hero {
+    background: var(--bg-dark);
+    color: #f0ece4;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 40px 64px;
+    position: relative;
+    z-index: 1;
+  }
+  .pub-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+    margin-bottom: 16px;
+  }
+  .pub-name a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .pub-name a:hover { color: rgba(240,236,228,0.6); }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #b0975c;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: #b0975c;
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #f0ece4;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #d4a87a;
+  }
+  .hero-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(240,236,228,0.6);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,236,228,0.3);
+  }
+  /* ─── tool map bar ─── */
+  .tool-map {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--rule);
+    padding: 0;
+    overflow-x: auto;
+  }
+  .tool-map-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+  }
+  .tool-pill {
+    padding: 14px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-right: 1px solid var(--rule-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tool-pill:last-child { border-right: none; }
+  .tool-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  /* ─── page body ─── */
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+  /* ─── back link ─── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+    margin-bottom: 48px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--ink); }
+  .back-link::before { content: '←'; font-size: 0.8rem; }
+  /* ─── prose ─── */
+  p {
+    font-size: 1rem;
+    line-height: 1.88;
+    color: var(--ink-mid);
+    margin-bottom: 1.5rem;
+  }
+  p + p { text-indent: 1.5em; }
+  p.no-indent { text-indent: 0 !important; }
+  .drop-cap::first-letter {
+    font-family: 'Lora', serif;
+    font-size: 4.8rem;
+    font-weight: 700;
+    float: left;
+    line-height: 0.8;
+    margin-right: 8px;
+    margin-top: 10px;
+    color: var(--ink);
+  }
+  /* ─── section ─── */
+  .section-head {
+    margin: 60px 0 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-top: 6px;
+    flex-shrink: 0;
+    width: 24px;
+  }
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  h2 em { font-style: italic; }
+  .section-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 2rem 0 0.8rem;
+  }
+  /* ─── tool card ─── */
+  .tool-card {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    margin: 36px 0;
+    overflow: hidden;
+  }
+  .tool-card-header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .tool-badge {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    letter-spacing: 0.06em;
+  }
+  .tool-card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .tool-card-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    font-weight: 300;
+  }
+  .tool-card-meta {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .tool-card-body {
+    padding: 20px 24px;
+    background: var(--bg);
+  }
+  .tool-card-body p {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    text-indent: 0 !important;
+  }
+  .use-cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .use-case {
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ink-mid);
+    border: 1px solid var(--rule-light);
+    background: var(--bg-warm);
+  }
+  .use-case strong {
+    display: block;
+    font-size: 0.68rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  /* ─── pull quote ─── */
+  .pull {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 3px solid var(--red);
+    background: var(--red-bg);
+    position: relative;
+  }
+  .pull p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0;
+    text-indent: 0 !important;
+  }
+  /* ─── NEW badge ─── */
+  .new-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 8px;
+    position: relative;
+    top: -1px;
+  }
+  /* ─── command block ─── */
+  .cmd-block {
+    background: #141210;
+    border-radius: 5px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: #a8c898;
+    overflow-x: auto;
+  }
+  .cmd-block .p { color: #7a9a6a; }
+  .cmd-block .c { color: rgba(168,200,152,0.45); font-style: italic; }
+  .cmd-block .h { color: #d4b070; }
+  /* ─── divider ─── */
+  .orn {
+    text-align: center;
+    margin: 48px 0;
+    color: var(--rule);
+    font-size: 0.75rem;
+    letter-spacing: 14px;
+  }
+  /* ─── responsive ─── */
+  @media (max-width: 620px) {
+    .page { padding: 40px 24px 80px; }
+    .hero-inner { padding: 56px 24px 48px; }
+    .tool-map-inner { padding: 0 24px; }
+    .use-cases { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-inner">
+    <div class="pub-name"><a href="../../">Curious Pages</a></div>
+    <div class="hero-eyebrow">Field Guide · March 2026</div>
+    <h1>Every Claude Tool,<br><em>One Clear Picture</em></h1>
+    <p class="hero-sub">Chat, Code, Cowork, Projects, Skills, CLAUDE.md, Dispatch — what each one is, what it does, and how they fit together into a single working system.</p>
+    <div class="hero-meta">
+      <span>Practical</span>
+      <span>·</span>
+      <span>~3,000 words</span>
+      <span>·</span>
+      <span>Curious Pages</span>
+      <span>·</span>
+      <span>Updated: March 21, 2026</span>
+    </div>
+  </div>
+</header>
+<nav class="tool-map">
+  <div class="tool-map-inner">
+    <div class="tool-pill"><span class="tool-dot" style="background:#5a7ab8"></span>Claude Chat</div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#2a8a50"></span>Claude Projects</div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#b83232"></span>Claude Code</div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#8a5a00"></span>Cowork</div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#5a3580"></span>Dispatch <span class="new-badge">new</span></div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#1a5f6a"></span>Skills</div>
+    <div class="tool-pill"><span class="tool-dot" style="background:#3a3730"></span>CLAUDE.md</div>
+  </div>
+</nav>
+<main class="page">
+  <a href="../../" class="back-link">All articles</a>
+  <p class="drop-cap">There is a particular frustration in having a powerful tool you don't fully understand. You use one corner of it, sense there is more, but can't quite see the shape of the whole. That is where most people are with Claude right now. They have the hammer. They don't know about the chisel, the saw, or the workbench.</p>
+  <p>This article is the map. Not a manual — a map. After reading it, you will know what each tool is, what it is good for, and how they connect.</p>
+  <div class="section-head">
+    <div class="section-num">I</div>
+    <div class="section-head-text">
+      <h2>The Seven Pieces</h2>
+      <div class="section-tagline">A plain-language introduction before the details</div>
+    </div>
+  </div>
+  <p class="no-indent">Before going deep on any single tool, here is the whole system in one paragraph. Claude Chat is the conversation. Claude Projects is the memory around the conversation. Claude Code is the agent in your terminal, doing real work on real files. Cowork is the same agent, but for non-coders, living inside the desktop app. Dispatch is the mobile remote control for Cowork, just released. Skills are specialised instruction packs you load into Claude so it can handle specific file types or workflows. CLAUDE.md is the config file that makes any of the above behave consistently inside your project.</p>
+  <p>Now each, in turn.</p>
+  <!-- ─── CHAT ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:#eef2fb;color:#1e4a7a">CH</div>
+      <div>
+        <div class="tool-card-title">Claude Chat</div>
+        <div class="tool-card-subtitle">The conversation layer. claude.ai or the mobile app.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#eef2fb;color:#1e4a7a">All plans</div>
+    </div>
+    <div class="tool-card-body">
+      <p>This is where most people start and, for many, where they stay. Claude Chat is a single conversation window — you type, Claude responds, you refine. It is the most approachable entry point and still deeply capable for writing, analysis, research, ideation, and editing.</p>
+      <p>What it cannot do: remember yesterday's conversation (unless you're in a Project), act autonomously on files, or complete a task while you step away.</p>
+      <div class="use-cases">
+        <div class="use-case"><strong>Writing</strong>Articles, newsletters, scripts, emails, Substack drafts</div>
+        <div class="use-case"><strong>Research</strong>Summarise PDFs, synthesise sources, explain complex topics</div>
+        <div class="use-case"><strong>Thinking</strong>Brainstorm, critique your own ideas, work through decisions</div>
+        <div class="use-case"><strong>Creation</strong>Generate artifacts, HTML pages, reports, image prompts</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── PROJECTS ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:#f0f7f3;color:#2a6644">PR</div>
+      <div>
+        <div class="tool-card-title">Claude Projects</div>
+        <div class="tool-card-subtitle">Persistent context across conversations.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#f0f7f3;color:#2a6644">Pro / Max</div>
+    </div>
+    <div class="tool-card-body">
+      <p>A Project is a folder that holds documents, custom instructions, and conversation history — all of which persist between sessions. When you open a Project, Claude already knows your style guide, your brand voice, the documents you've uploaded, and what you discussed last week.</p>
+      <p>Think of it as a permanent briefing that runs before every conversation. This is the difference between a contractor who shows up cold each morning and a collaborator who has been with you for months.</p>
+      <div class="use-cases">
+        <div class="use-case"><strong>Publishing</strong>Upload your master brief once. Every session already knows your voice, format rules, and house style.</div>
+        <div class="use-case"><strong>Research</strong>Upload your source PDFs. Ask questions across all of them without re-uploading.</div>
+        <div class="use-case"><strong>Clients</strong>One project per client. Upload their brief, tone guide, and past deliverables.</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── CODE ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:#fdf2f2;color:#b83232">CC</div>
+      <div>
+        <div class="tool-card-title">Claude Code</div>
+        <div class="tool-card-subtitle">An autonomous agent that lives in your terminal.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#fdf2f2;color:#b83232">Pro / Max</div>
+    </div>
+    <div class="tool-card-body">
+      <p>Claude Code is not an autocomplete tool. It reads your entire codebase, forms a plan, executes bash commands, edits multiple files, runs tests, catches failures, and corrects itself — all from a single natural-language instruction. As we wrote in the previous article in this series, it is closer to an operating system than a coding assistant.</p>
+      <p>You install it once in your terminal (<code>npm install -g @anthropic-ai/claude-code</code>), navigate to any project folder, and type <code>claude</code>. From that moment, you have an agent that can build, debug, refactor, and ship.</p>
+      <p>Recent additions make it significantly more powerful: <strong>Checkpoints</strong> auto-save your state before every change, so you can rewind with <code>/rewind</code>. <strong>Subagents</strong> let one agent delegate to another in parallel. <strong>Remote Control</strong> (launched February 2026) lets you monitor and direct a running session from your phone.</p>
+      <div class="cmd-block">
+        <span class="p">$</span> claude<br>
+        <span class="h">></span> Build me a static site index.html that lists all HTML files in the /articles folder<br>
+        <span class="c"># Claude reads the folder, writes the file, opens it for review</span>
+      </div>
+      <div class="use-cases">
+        <div class="use-case"><strong>Site building</strong>Build and push your GitHub Pages site from one instruction</div>
+        <div class="use-case"><strong>Automation</strong>Write scripts that batch-process files, rename, organise, convert</div>
+        <div class="use-case"><strong>PDF generation</strong>Generate a formatted PDF from markdown notes automatically</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── COWORK ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:#fdf6e8;color:#8a5a00">CW</div>
+      <div>
+        <div class="tool-card-title">Cowork</div>
+        <div class="tool-card-subtitle">Claude Code's power, without the terminal. For everyone.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#fdf6e8;color:#8a5a00">Pro / Max</div>
+    </div>
+    <div class="tool-card-body">
+      <p>Cowork is what happens when Anthropic noticed that non-developers were using Claude Code to organise files, compile research, and draft documents — and decided to make that experience official. It lives inside the Claude desktop app (Mac and Windows), runs in an isolated virtual machine on your own computer, and gives Claude direct access to the folders you grant it.</p>
+      <p>The workflow is simple: open Cowork, point it at a folder, describe the outcome you want, review the plan, and step away. Claude works while you do something else. You come back to finished work.</p>
+      <p>You can also set scheduled tasks. "Every Monday morning, pull last week's Substack stats, format them into a one-page report, and save it to my Obsidian vault." That runs without you doing anything.</p>
+      <div class="use-cases">
+        <div class="use-case"><strong>File organisation</strong>Sort, rename, and structure months of accumulated downloads in minutes</div>
+        <div class="use-case"><strong>Report generation</strong>Turn a folder of receipts or screenshots into a formatted spreadsheet</div>
+        <div class="use-case"><strong>Content production</strong>Feed it raw notes, get a first draft back in the correct format</div>
+        <div class="use-case"><strong>Scheduled work</strong>Weekly briefings, monthly reports — set once, run forever</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── DISPATCH ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header" style="border-bottom-color: var(--rule)">
+      <div class="tool-badge" style="background:#f5f0fb;color:#5a3580">DI</div>
+      <div>
+        <div class="tool-card-title">Cowork Dispatch <span class="new-badge">launched Mar 17</span></div>
+        <div class="tool-card-subtitle">Your phone as a remote control for your desktop agent.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#f5f0fb;color:#5a3580">Pro / Max</div>
+    </div>
+    <div class="tool-card-body">
+      <p>Dispatch solves a genuine friction point: Cowork is powerful, but you had to be at your desk to use it. Dispatch breaks that constraint.</p>
+      <p>The setup takes sixty seconds. Open Cowork on your desktop, click Dispatch, scan the QR code with your phone. Done. From that moment, your phone is a walkie-talkie to your desktop. You send a prompt — "Organise my Q1 receipts and make a PDF summary" — your Mac receives it, executes the task locally in its sandboxed environment, and sends you back the result. Your files never leave your machine.</p>
+      <p>One important caveat: your computer must stay on and Claude Desktop must stay open. Dispatch is a remote control, not cloud computing. If your laptop sleeps, the session ends.</p>
+      <div class="use-cases">
+        <div class="use-case"><strong>Morning brief</strong>While making chai: "Summarise yesterday's emails and my calendar for today"</div>
+        <div class="use-case"><strong>On the move</strong>Kick off a long research task from your phone, come back to results</div>
+        <div class="use-case"><strong>Content pipeline</strong>Trigger article drafts or report generation from anywhere</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── SKILLS ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:#eef8f9;color:#1a5f6a">SK</div>
+      <div>
+        <div class="tool-card-title">Skills</div>
+        <div class="tool-card-subtitle">Specialised instruction packs that extend Claude's native abilities.</div>
+      </div>
+      <div class="tool-card-meta" style="background:#eef8f9;color:#1a5f6a">All plans</div>
+    </div>
+    <div class="tool-card-body">
+      <p>A Skill is a folder containing a SKILL.md file — instructions, templates, and examples that teach Claude how to handle a specific task category to a professional standard. When Claude loads a Skill before working, it is not guessing at format. It knows exactly what a great Word document looks like, how to structure a PDF, what a well-formed PowerPoint requires.</p>
+      <p>Anthropic ships pre-built Skills for DOCX, XLSX, PDF, and PPTX. You can also build your own: a Skill for your newsletter template, a Skill for your video script format, a Skill for your PDF house style. Once built, every piece of content comes out consistent without re-explaining the format each time.</p>
+      <div class="use-cases">
+        <div class="use-case"><strong>Document creation</strong>Professional Word docs, PDFs, presentations that match your house style</div>
+        <div class="use-case"><strong>Custom workflows</strong>A publication-specific skill that encodes all your formatting rules</div>
+        <div class="use-case"><strong>Cowork integration</strong>Skills load automatically inside Cowork for relevant file types</div>
+      </div>
+    </div>
+  </div>
+  <!-- ─── CLAUDE.MD ─── -->
+  <div class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-badge" style="background:var(--bg-card);color:var(--ink-mid)">MD</div>
+      <div>
+        <div class="tool-card-title">CLAUDE.md</div>
+        <div class="tool-card-subtitle">The config file that makes any agent behave consistently.</div>
+      </div>
+      <div class="tool-card-meta" style="background:var(--bg-card);color:var(--ink-mid)">Claude Code</div>
+    </div>
+    <div class="tool-card-body">
+      <p>CLAUDE.md is a plain Markdown file you place at the root of any project folder. Claude Code reads it at the start of every session. Whatever you write there — your tone preferences, your technical conventions, your output format requirements — becomes the ambient context for every action Claude takes.</p>
+      <p>It is not documentation for you. You already know these things. It is the briefing note you give a very capable new team member on their first day, except this team member reads it fresh every morning and never forgets it.</p>
+      <div class="cmd-block">
+        <span class="h">## Project: My Publication</span><br>
+        <span class="c"># Read this before every session</span><br><br>
+        Tone: warm, curious, accessible. Morgan Housel, not Wikipedia.<br>
+        Never use em dashes.<br>
+        All articles end with an image generation prompt.<br>
+        Thumbnails: 14:10 ratio, painterly and warm.<br>
+        Exports: save to /exports folder.<br>
+      </div>
+      <div class="use-cases">
+        <div class="use-case"><strong>Brand voice</strong>Encode your tone, style rules, and no-go phrases once, applied always</div>
+        <div class="use-case"><strong>Project conventions</strong>File naming, output folders, tool preferences, commit message style</div>
+        <div class="use-case"><strong>Multi-project</strong>Each project folder gets its own CLAUDE.md — agents context-switch automatically</div>
+      </div>
+    </div>
+  </div>
+  <div class="orn">· · ·</div>
+  <div class="section-head">
+    <div class="section-num">II</div>
+    <div class="section-head-text">
+      <h2>How They Fit Together</h2>
+      <div class="section-tagline">The same system, seen as a whole</div>
+    </div>
+  </div>
+  <p class="no-indent">A useful mental model: Claude Chat is where you think out loud. Projects is the memory that makes that thinking persistent. Claude Code and Cowork are where thinking becomes action. Skills are the craft standards your agent applies when it acts. CLAUDE.md is the standing orders that govern how it acts. Dispatch is the thread that keeps you connected to it all, even from your phone.</p>
+  <div class="pull">
+    <p>You are not using seven separate tools. You are building one system: a persistent, context-aware, increasingly autonomous collaborator that knows your work, your voice, and your goals — and keeps working even when you step away.</p>
+  </div>
+  <p>The practical implication: the tools compound. A Claude Code agent operating inside a well-structured project folder, with a good CLAUDE.md, with the right Skills loaded, is not the same creature as a bare Claude Code session. The briefing sharpens every action. Each layer you add multiplies the quality of the output.</p>
+</main>
+</body>
+</html>
