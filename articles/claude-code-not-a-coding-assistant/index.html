@@ -60,7 +60,7 @@
   .masthead-inner {
     max-width: 860px;
     margin: 0 auto;
-    padding: 72px 40px 56px;
+    padding: 48px 40px 40px;
     position: relative;
     z-index: 1;
   }
@@ -127,7 +127,7 @@
   .page {
     max-width: 720px;
     margin: 0 auto;
-    padding: 64px 40px 120px;
+    padding: 40px 40px 60px;
   }
   /* ─── drop cap ─── */
   .drop-cap::first-letter {
@@ -145,7 +145,7 @@
     font-size: 1rem;
     line-height: 1.88;
     color: var(--ink-mid);
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.1rem;
   }
   p + p { text-indent: 1.5em; }
   p + p.no-indent { text-indent: 0; }
@@ -154,7 +154,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    margin: 56px 0 28px;
+    margin: 36px 0 16px;
   }
   .section-num {
     font-family: 'JetBrains Mono', monospace;
@@ -189,8 +189,8 @@
   }
   /* ─── pull quote ─── */
   .pull-quote {
-    margin: 48px -40px;
-    padding: 36px 40px;
+    margin: 28px -40px;
+    padding: 24px 40px;
     background: var(--paper-card);
     border-left: 4px solid var(--accent);
     border-right: none;
@@ -247,7 +247,7 @@
     border: 1px solid var(--rule);
     border-left: 3px solid var(--gold);
     padding: 20px 24px;
-    margin: 32px 0;
+    margin: 20px 0;
     background: rgba(184,134,11,0.04);
   }
   .annotation-label {
@@ -313,7 +313,7 @@
   /* ─── horizontal rule ─── */
   .ornament {
     text-align: center;
-    margin: 52px 0;
+    margin: 28px 0;
     color: var(--rule);
     letter-spacing: 16px;
     font-size: 0.7rem;
@@ -337,8 +337,8 @@
   .summary-bar {
     background: var(--ink);
     color: var(--paper);
-    padding: 36px 40px;
-    margin: 64px -40px 0;
+    padding: 28px 40px;
+    margin: 40px -40px 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
@@ -374,7 +374,7 @@
     text-transform: uppercase;
     color: var(--ink-faint);
     text-decoration: none;
-    margin-bottom: 48px;
+    margin-bottom: 28px;
     transition: color 0.2s;
   }
   .back-link:hover { color: var(--ink); }
@@ -383,10 +383,10 @@
   .clearfix::after { content: ''; display: table; clear: both; }
   /* ─── responsive ─── */
   @media (max-width: 640px) {
-    .page { padding: 40px 24px 80px; }
-    .masthead-inner { padding: 48px 24px 40px; }
-    .pull-quote { margin: 36px -24px; padding: 28px 24px; }
-    .summary-bar { grid-template-columns: 1fr; margin: 48px -24px 0; padding: 28px 24px; }
+    .page { padding: 28px 24px 48px; }
+    .masthead-inner { padding: 32px 24px 28px; }
+    .pull-quote { margin: 20px -24px; padding: 20px 24px; }
+    .summary-bar { grid-template-columns: 1fr; margin: 32px -24px 0; padding: 20px 24px; }
     .compare-grid { grid-template-columns: 1fr; }
     .compare-cell.header:first-child { display: none; }
     .aside { float: none; width: 100%; margin: 0 0 24px; }
