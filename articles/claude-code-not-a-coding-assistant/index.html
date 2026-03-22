@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem('cp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Code Is Not a Coding Assistant — Curious Pages</title>
@@ -25,6 +26,70 @@
     --gold: #b8860b;
     --gold-light: #d4a520;
   }
+html[data-theme="dark"] {
+  --ink: #e0dbd3;
+  --ink-mid: #b8b3ab;
+  --ink-soft: #787370;
+  --ink-faint: #484440;
+  --paper: #141210;
+  --paper-warm: #1c1916;
+  --paper-card: #201d19;
+  --rule: #302c27;
+  --rule-light: #252118;
+  --gold: #c4980e;
+}
+html[data-theme="dark"] .masthead { background: #0c0a08; }
+html[data-theme="dark"] .terminal { background: #0a0806; }
+html[data-theme="dark"] .compare-cell { background: var(--paper-card); }
+html[data-theme="dark"] .compare-cell.header { background: #1a1816; }
+html[data-theme="dark"] .annotation { background: rgba(196,152,14,0.06); }
+/* ─── theme toggle ─── */
+.theme-toggle {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.t-sun, .t-moon {
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0.35;
+  transition: opacity 0.22s;
+  user-select: none;
+}
+html:not([data-theme="dark"]) .t-sun { opacity: 1; }
+html[data-theme="dark"] .t-moon { opacity: 1; }
+.t-track {
+  width: 32px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--rule, #c8bfb0);
+  position: relative;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+html[data-theme="dark"] .t-track { background: #5a5650; }
+.t-thumb {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--paper, #f5f0e8);
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+html[data-theme="dark"] .t-thumb { transform: translateX(15px); }
+.article-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.article-nav .back-link { margin-bottom: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { font-size: 18px; background: var(--paper); color: var(--ink); }
   body {
@@ -410,7 +475,14 @@
   </div>
 </header>
 <main class="page">
-  <a href="../../" class="back-link">All articles</a>
+  <div class="article-nav">
+    <a href="../../" class="back-link">All articles</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="t-sun">☀</span>
+      <span class="t-track"><span class="t-thumb"></span></span>
+      <span class="t-moon">☽</span>
+    </button>
+  </div>
   <p class="drop-cap">In 1969, Ken Thompson sat down in three weeks and wrote Unix. Not an application, not a tool — an operating system. The difference is philosophical. A tool does a job. An operating system creates the conditions under which all other jobs become possible. What Thompson built was not software that solved a problem. It was a surface on which problems could be brought into being, named, and then solved.</p>
   <p>Something similar is happening right now, quietly, inside terminals across the world — only most people are too busy asking it to fix their Python syntax errors to notice.</p>
   <p>Claude Code is not a coding assistant. That framing is as wrong as calling electricity a "better candle." It is technically defensible, historically useless, and entirely misses the point.</p>
@@ -572,5 +644,18 @@
     </div>
   </div>
 </main>
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeToggle');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var dark=root.getAttribute('data-theme')==='dark';
+      if(dark){root.removeAttribute('data-theme');localStorage.setItem('cp-theme','light');}
+      else{root.setAttribute('data-theme','dark');localStorage.setItem('cp-theme','dark');}
+    });
+  }
+})();
+</script>
 </body>
 </html>

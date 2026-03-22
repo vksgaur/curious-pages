@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem('cp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Every Claude Tool, One Clear Picture — Curious Pages</title>
@@ -33,6 +34,75 @@
     --teal: #1a5f6a;
     --teal-bg: #eef8f9;
   }
+html[data-theme="dark"] {
+  --bg: #141210;
+  --bg-warm: #1a1816;
+  --bg-card: #1e1c18;
+  --bg-dark: #0c0a08;
+  --ink: #e0dbd3;
+  --ink-mid: #b8b3ab;
+  --ink-soft: #787370;
+  --ink-faint: #484440;
+  --rule: #302c27;
+  --rule-light: #252118;
+  --red-bg: #1e1210;
+  --green-bg: #0e1812;
+  --blue-bg: #0e1420;
+  --amber-bg: #1c1608;
+  --purple-bg: #16101e;
+  --teal-bg: #0c1618;
+}
+html[data-theme="dark"] .tool-card-body { background: var(--bg); }
+html[data-theme="dark"] .use-case { background: var(--bg-warm); border-color: var(--rule); }
+html[data-theme="dark"] .cmd-block { background: #0a0806; }
+html[data-theme="dark"] .personal { background: #0c0a08; }
+/* ─── theme toggle ─── */
+.theme-toggle {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.t-sun, .t-moon {
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0.35;
+  transition: opacity 0.22s;
+  user-select: none;
+}
+html:not([data-theme="dark"]) .t-sun { opacity: 1; }
+html[data-theme="dark"] .t-moon { opacity: 1; }
+.t-track {
+  width: 32px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--rule, #c8bfb0);
+  position: relative;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+html[data-theme="dark"] .t-track { background: #5a5650; }
+.t-thumb {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--bg, #f9f6f0);
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+html[data-theme="dark"] .t-thumb { transform: translateX(15px); }
+.article-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.article-nav .back-link { margin-bottom: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { font-size: 18px; background: var(--bg); }
   body {
@@ -423,7 +493,14 @@
   </div>
 </nav>
 <main class="page">
-  <a href="../../" class="back-link">All articles</a>
+  <div class="article-nav">
+    <a href="../../" class="back-link">All articles</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="t-sun">☀</span>
+      <span class="t-track"><span class="t-thumb"></span></span>
+      <span class="t-moon">☽</span>
+    </button>
+  </div>
   <p class="drop-cap">There is a particular frustration in having a powerful tool you don't fully understand. You use one corner of it, sense there is more, but can't quite see the shape of the whole. That is where most people are with Claude right now. They have the hammer. They don't know about the chisel, the saw, or the workbench.</p>
   <p>This article is the map. Not a manual — a map. After reading it, you will know what each tool is, what it is good for, and how they connect.</p>
   <div class="section-head">
@@ -608,5 +685,18 @@
   </div>
   <p>The practical implication: the tools compound. A Claude Code agent operating inside a well-structured project folder, with a good CLAUDE.md, with the right Skills loaded, is not the same creature as a bare Claude Code session. The briefing sharpens every action. Each layer you add multiplies the quality of the output.</p>
 </main>
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeToggle');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var dark=root.getAttribute('data-theme')==='dark';
+      if(dark){root.removeAttribute('data-theme');localStorage.setItem('cp-theme','light');}
+      else{root.setAttribute('data-theme','dark');localStorage.setItem('cp-theme','dark');}
+    });
+  }
+})();
+</script>
 </body>
 </html>

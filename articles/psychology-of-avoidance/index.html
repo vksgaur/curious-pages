@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem('cp-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Psychology of Why We Avoid What We Want Most — Curious Pages</title>
@@ -8,10 +9,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    /* light mode (default) */
+    --pg-bg: #f5f0e6;
+    --pg-text: #2a1f12;
+    --pg-accent: #b5620a;
+    --pg-gold: #b5820a;
+    --pg-gold-faint: rgba(160,100,30,0.4);
+    --pg-headline: #1a1208;
+    --pg-body: rgba(42,31,18,0.88);
+    --pg-lead: #2a1f12;
+    --pg-strong: #1a1208;
+    --pg-em: rgba(42,31,18,0.8);
+    --pg-soft: rgba(42,31,18,0.55);
+    --pg-faint: rgba(42,31,18,0.4);
+    --pg-rule: rgba(140,100,40,0.15);
+    --pg-back: rgba(140,100,40,0.45);
+    --pg-back-hover: rgba(140,100,40,0.85);
+    --pg-cover-border: rgba(140,100,40,0.2);
+    --pg-hindi-border: rgba(181,98,10,0.4);
+    --pg-hindi-bg: rgba(181,98,10,0.05);
+    --pg-progress-bg: rgba(0,0,0,0.06);
+    --pg-progress: linear-gradient(90deg, #b5620a, #d4a060);
+    --pg-sign-border: rgba(140,100,40,0.18);
+    --pg-brandmark: rgba(140,100,40,0.3);
+  }
+  html[data-theme="dark"] {
+    /* dark mode — the original atmospheric look */
+    --pg-bg: #0e0a06;
+    --pg-text: #e8dcc8;
+    --pg-accent: #D4840A;
+    --pg-gold: #C4A070;
+    --pg-gold-faint: rgba(196,160,112,0.5);
+    --pg-headline: #F5E6C8;
+    --pg-body: rgba(232,220,200,0.9);
+    --pg-lead: #e8dcc8;
+    --pg-strong: #F5E6C8;
+    --pg-em: rgba(232,220,200,0.85);
+    --pg-soft: rgba(232,220,200,0.55);
+    --pg-faint: rgba(196,160,112,0.5);
+    --pg-rule: rgba(196,160,112,0.12);
+    --pg-back: rgba(196,160,112,0.4);
+    --pg-back-hover: rgba(196,160,112,0.8);
+    --pg-cover-border: rgba(196,160,112,0.2);
+    --pg-hindi-border: rgba(212,132,10,0.5);
+    --pg-hindi-bg: rgba(212,132,10,0.05);
+    --pg-progress-bg: rgba(255,255,255,0.05);
+    --pg-progress: linear-gradient(90deg, #D4840A, #F5E6C8);
+    --pg-sign-border: rgba(196,160,112,0.18);
+    --pg-brandmark: rgba(196,160,112,0.3);
+  }
 
   body {
-    background: #0e0a06;
-    color: #e8dcc8;
+    background: var(--pg-bg);
+    color: var(--pg-text);
     font-family: 'Lora', Georgia, serif;
     font-size: 18px;
     line-height: 1.85;
@@ -25,6 +76,12 @@
   }
 
   /* BACK LINK */
+  .article-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 0;
+  }
   .back-link {
     display: inline-flex;
     align-items: center;
@@ -33,12 +90,12 @@
     font-size: 0.65rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(196,160,112,0.4);
+    color: var(--pg-back);
     text-decoration: none;
-    padding: 20px 0 0;
+    padding: 0;
     transition: color 0.2s;
   }
-  .back-link:hover { color: rgba(196,160,112,0.8); }
+  .back-link:hover { color: var(--pg-back-hover); }
   .back-link::before { content: '←'; font-size: 0.85rem; }
 
   /* HEADER / COVER */
@@ -50,7 +107,7 @@
     justify-content: flex-end;
     padding: 2rem 0 2rem;
     margin-bottom: 2rem;
-    border-bottom: 1px solid rgba(196,160,112,0.2);
+    border-bottom: 1px solid var(--pg-cover-border);
   }
 
   .cover-bg {
@@ -66,7 +123,7 @@
     font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #C4A070;
+    color: var(--pg-gold);
     margin-bottom: 1.4rem;
     opacity: 0.8;
   }
@@ -76,20 +133,20 @@
     font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 700;
     line-height: 1.15;
-    color: #F5E6C8;
+    color: var(--pg-headline);
     letter-spacing: -0.01em;
     margin-bottom: 1.2rem;
   }
 
   h1.headline .accent {
-    color: #D4840A;
+    color: var(--pg-accent);
     font-style: italic;
   }
 
   .subtitle {
     font-family: 'Lora', serif;
     font-size: 1.05rem;
-    color: rgba(232,220,200,0.55);
+    color: var(--pg-soft);
     font-style: italic;
     letter-spacing: 0.01em;
     line-height: 1.6;
@@ -102,7 +159,7 @@
     align-items: center;
     gap: 1.8rem;
     font-size: 0.78rem;
-    color: rgba(196,160,112,0.5);
+    color: var(--pg-faint);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -112,7 +169,7 @@
   /* DECORATIVE RULE */
   .ornament {
     text-align: center;
-    color: #C4A070;
+    color: var(--pg-gold);
     opacity: 0.4;
     font-size: 1.1rem;
     letter-spacing: 0.5em;
@@ -123,14 +180,14 @@
   /* BODY TEXT */
   .body-text p {
     margin-bottom: 1rem;
-    color: rgba(232,220,200,0.9);
+    color: var(--pg-body);
     font-size: 1rem;
     line-height: 1.9;
   }
 
   .body-text p.lead {
     font-size: 1.12rem;
-    color: #e8dcc8;
+    color: var(--pg-lead);
     line-height: 1.85;
   }
 
@@ -139,14 +196,14 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.45rem;
     font-weight: 600;
-    color: #F5E6C8;
+    color: var(--pg-headline);
     margin: 2rem 0 0.8rem;
     line-height: 1.3;
     letter-spacing: -0.01em;
   }
 
   h2.section-head .num {
-    color: #D4840A;
+    color: var(--pg-accent);
     font-style: italic;
     margin-right: 0.5rem;
     font-size: 1.1rem;
@@ -154,16 +211,16 @@
 
   /* HINDI CALLOUT */
   .hindi-block {
-    border-left: 2px solid rgba(212,132,10,0.5);
+    border-left: 2px solid var(--pg-hindi-border);
     padding: 1rem 1.4rem;
     margin: 1.4rem 0;
-    background: rgba(212,132,10,0.05);
+    background: var(--pg-hindi-bg);
     border-radius: 0 4px 4px 0;
   }
 
   .hindi-block .devanagari {
     font-size: 1.35rem;
-    color: #D4840A;
+    color: var(--pg-accent);
     font-family: 'Lora', serif;
     line-height: 1.6;
     display: block;
@@ -172,7 +229,7 @@
 
   .hindi-block .translation {
     font-size: 0.88rem;
-    color: rgba(196,160,112,0.65);
+    color: var(--pg-gold-faint);
     font-style: italic;
     letter-spacing: 0.02em;
   }
@@ -200,7 +257,7 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.25rem;
     font-style: italic;
-    color: #F5E6C8;
+    color: var(--pg-headline);
     line-height: 1.65;
     max-width: 500px;
     margin: 0 auto 0.8rem;
@@ -208,7 +265,7 @@
 
   .pull-quote cite {
     font-size: 0.82rem;
-    color: rgba(196,160,112,0.55);
+    color: var(--pg-faint);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-style: normal;
@@ -217,19 +274,19 @@
   /* HORIZONTAL RULE */
   hr.section-break {
     border: none;
-    border-top: 1px solid rgba(196,160,112,0.12);
+    border-top: 1px solid var(--pg-rule);
     margin: 2rem 0;
   }
 
   /* BOLD */
   strong {
-    color: #F5E6C8;
+    color: var(--pg-strong);
     font-weight: 600;
   }
 
   /* ITALICS */
   em {
-    color: rgba(232,220,200,0.85);
+    color: var(--pg-em);
     font-style: italic;
   }
 
@@ -237,12 +294,12 @@
   .sign-off {
     margin-top: 2.5rem;
     padding-top: 1.8rem;
-    border-top: 1px solid rgba(196,160,112,0.18);
+    border-top: 1px solid var(--pg-sign-border);
   }
 
   .sign-off .cta {
     font-size: 0.88rem;
-    color: rgba(196,160,112,0.55);
+    color: var(--pg-faint);
     line-height: 1.7;
     margin-bottom: 1.8rem;
     font-style: italic;
@@ -251,7 +308,7 @@
   .sign-off .bilingual-close {
     font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
-    color: #D4840A;
+    color: var(--pg-accent);
     letter-spacing: 0.03em;
   }
 
@@ -266,7 +323,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(196,160,112,0.3);
+    color: var(--pg-brandmark);
   }
 
   /* READING TIME BAR */
@@ -274,13 +331,13 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: rgba(255,255,255,0.05);
+    background: var(--pg-progress-bg);
     z-index: 100;
   }
 
   .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #D4840A, #F5E6C8);
+    background: var(--pg-progress);
     width: 0%;
     transition: width 0.1s linear;
   }
@@ -292,10 +349,50 @@
     font-size: 4.2rem;
     font-weight: 700;
     line-height: 0.8;
-    color: #D4840A;
+    color: var(--pg-accent);
     margin: 0.08em 0.12em 0 0;
     padding: 0;
   }
+
+  /* ─── theme toggle ─── */
+  .theme-toggle {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .t-sun, .t-moon {
+    font-size: 0.65rem;
+    line-height: 1;
+    opacity: 0.35;
+    transition: opacity 0.22s;
+    user-select: none;
+  }
+  html:not([data-theme="dark"]) .t-sun { opacity: 1; }
+  html[data-theme="dark"] .t-moon { opacity: 1; }
+  .t-track {
+    width: 32px;
+    height: 17px;
+    border-radius: 9px;
+    background: var(--pg-gold-faint);
+    position: relative;
+    transition: background 0.25s;
+    flex-shrink: 0;
+  }
+  .t-thumb {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--pg-bg);
+    top: 3px;
+    left: 3px;
+    transition: transform 0.25s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+  html[data-theme="dark"] .t-thumb { transform: translateX(15px); }
 
   @media (max-width: 600px) {
     body { font-size: 16px; }
@@ -311,7 +408,14 @@
 
 <div class="article-wrap">
 
-  <a href="../../" class="back-link">All articles</a>
+  <div class="article-nav">
+    <a href="../../" class="back-link">All articles</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span class="t-sun">☀</span>
+      <span class="t-track"><span class="t-thumb"></span></span>
+      <span class="t-moon">☽</span>
+    </button>
+  </div>
 
   <div class="cover">
     <div class="cover-bg"></div>
@@ -488,6 +592,19 @@
   }
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeToggle');
+  if(btn){
+    btn.addEventListener('click',function(){
+      var dark=root.getAttribute('data-theme')==='dark';
+      if(dark){root.removeAttribute('data-theme');localStorage.setItem('cp-theme','light');}
+      else{root.setAttribute('data-theme','dark');localStorage.setItem('cp-theme','dark');}
+    });
+  }
+})();
 </script>
 
 </body>
